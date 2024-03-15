@@ -150,6 +150,17 @@ def askai():
 
         return 0
 
+
+## Save Data Function
+def save_data():
+
+    with open("Question_Answer.md", 'a') as QA:
+        for Q,A in QUESTION_ANSWER.items():
+            QA.write(f"Question: {Q}\n")
+            QA.write(f"Answer: {A}\n\n")
+
+    return 0
+
 ## Main function
 def main():
     menu(0)
@@ -158,7 +169,7 @@ def main():
         try:
             Q = -1
             Q=int(input("\nSelect an option: "))
-            if ( Q == 0 ) :
+            if ( Q == 0 ) :     # 0 - Menu
                 menu(0)
             elif ( Q == 1) :    # 1 - Study
                 menu(1)
@@ -192,7 +203,7 @@ def main():
                         Q = -1
                         print(TERM_DEFINITION, TOPIC_DESCRIPTION, QUESTION_ANSWER, MISC_NOTES)
 
-            if ( Q == 2 ):    # 2 - Note
+            elif ( Q == 2 ):    # 2 - Note
                 Q = -1
                 menu(2)
                 Q=int(input("\nSelect an option: "))
@@ -218,6 +229,7 @@ def main():
 
             elif ( Q == 5 ):    # 5 - Exit
                 Q = -1
+                save_data()
                 return 0
 
         except: # to except errors
