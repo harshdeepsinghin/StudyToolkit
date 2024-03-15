@@ -4,11 +4,12 @@ import time
 import os
 from dotenv import load_dotenv
 
+# Environments loading
 load_dotenv()
-
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 api_hash = os.getenv('API_HASH')
 
+# Variables Declaration
 TOPICS = set()
 TERM_DEFINITION = dict()
 TOPIC_DESCRIPTION = dict()
@@ -16,57 +17,57 @@ QUESTION_ANSWER = dict()
 MISC_NOTES = list()
 
 # FUNCTIONS DEFINITION
-
+## Menu functoin
 def menu(submenu):
     if ( submenu == 0 ):
         print("""
-0 - This menu
-1 - Study
-2 - Note
-3 - Retain
-4 - Utilities
-5 - Exit
+    0 - This menu
+    1 - Study
+    2 - Note
+    3 - Retain
+    4 - Utilities
+    5 - Exit
         """)
     elif ( submenu == 1 ):
         print("""
-0 - This menu
-1 - Ask AI
-2 - Study Notes
+    0 - This menu
+    1 - Ask AI
+    2 - Study Notes
         """)
     elif ( submenu == 12 ):
         print("""
-0 - This menu
-1 - Term-Definition
-2 - Topic-Description
-3 - Question-Answer
-4 - Miscellaneous Notes
-5 - All Notes
+    0 - This menu
+    1 - Term-Definition
+    2 - Topic-Description
+    3 - Question-Answer
+    4 - Miscellaneous Notes
+    5 - All Notes
         """)
     elif ( submenu == 2 ):
         print("""
-0 - This menu
-1 - Term-Definition
-2 - Topic-Description
-3 - Question-Answer
-4 - Miscellaneous Notes
+    0 - This menu
+    1 - Term-Definition
+    2 - Topic-Description
+    3 - Question-Answer
+    4 - Miscellaneous Notes
         """)
-
     return 0
 
+## Note function
 def note(TYPE):
-    if ( TYPE == 1 ):
+    if ( TYPE == 1 ):    # 2.1 - Term-Definition
         TERM = input("Term: ")
         DEFINITION = input("Definition: ")
         TERM_DEFINITION.update({TERM:DEFINITION})
-    elif ( TYPE == 2 ):
+    elif ( TYPE == 2 ):  # 2.2 - Topic-Description
         TOPIC = input("Topic: ")
         DESCRIPTION = input("Description: ")
         TOPIC_DESCRIPTION.update({TOPIC:DESCRIPTION})
-    elif ( TYPE == 3 ):
+    elif ( TYPE == 3 ):  # 2.3 - Question-Answer
         QUESTION = input("Question: ")
         ANSWER = input("Answer: ")
         QUESTION_ANSWER.update({QUESTION:ANSWER})
-    elif ( TYPE == 4 ):
+    elif ( TYPE == 4 ):  # 2.4 - Miscellaneous Notes
         NOTE = input("Note: ")
         MISC_NOTES.append(NOTE)
 
@@ -110,6 +111,8 @@ def search_term():
 
     return 0
 
+
+## Ask AI function
 def askai():
     while True:
         print()
@@ -147,7 +150,7 @@ def askai():
 
         return 0
 
-
+## Main function
 def main():
     menu(0)
     while True:
@@ -169,27 +172,27 @@ def main():
                     Q = -1
                     menu(12)
                     Q=int(input("\nSelect an option: "))
-                    if ( Q == 1 ):
+                    if ( Q == 1 ):    # 1.2.1 - Term-Definition
                         Q = -1
                         print(TERM_DEFINITION)
 
-                    elif ( Q == 2 ):
+                    elif ( Q == 2 ):  # 1.2.2 - Topic-Description
                         Q = -1
                         print(TOPIC_DESCRIPTION)
 
-                    elif ( Q == 3 ):
+                    elif ( Q == 3 ):  # 1.2.3 - Question-Answer
                         Q = -1
                         print(QUESTION_ANSWER)
 
-                    elif ( Q == 4 ):
+                    elif ( Q == 4 ):  # 1.2.4 - Miscellaneous Notes
                         Q = -1
                         print(MISC_NOTES)
 
-                    elif ( Q == 5 ):
+                    elif ( Q == 5 ):  # 1.2.5 - All Notes
                         Q = -1
                         print(TERM_DEFINITION, TOPIC_DESCRIPTION, QUESTION_ANSWER, MISC_NOTES)
 
-            if ( Q == 2 ):      # 2 - Note
+            if ( Q == 2 ):    # 2 - Note
                 Q = -1
                 menu(2)
                 Q=int(input("\nSelect an option: "))
@@ -197,23 +200,23 @@ def main():
                     Q = -1
                     menu(2)
 
-                elif ( Q == 1 ):
+                elif ( Q == 1 ):    # 2.1 - Term-Definition
                     Q = -1
                     note(1)
 
-                elif ( Q == 2 ):
+                elif ( Q == 2 ):    # 2.2 - Topic-Description
                     Q = -1
                     note(2)
 
-                elif ( Q == 3 ):
+                elif ( Q == 3 ):    # 2.3 - Question-Answer
                     Q = -1
                     note(3)
 
-                elif ( Q == 4 ):
+                elif ( Q == 4 ):    # 2.4 - Miscellaneous Notes
                     Q = -1
                     note(4)
 
-            elif ( Q == 5 ):
+            elif ( Q == 5 ):    # 5 - Exit
                 Q = -1
                 return 0
 
@@ -223,4 +226,6 @@ def main():
 
 
 
+
+# Main function Calling
 main()
