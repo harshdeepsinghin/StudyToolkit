@@ -2,6 +2,8 @@ import requests
 import json
 import time
 import os
+import platform
+import click
 from dotenv import load_dotenv
 
 # Environments loading
@@ -15,6 +17,8 @@ TERM_DEFINITION = dict()
 TOPIC_DESCRIPTION = dict()
 QUESTION_ANSWER = dict()
 MISC_NOTES = list()
+
+PLATFORM = platform.system()
 
 # FUNCTIONS DEFINITION
 ## Menu functoin
@@ -68,6 +72,11 @@ def note(TYPE):
         ANSWER = input("Answer: ")
         QUESTION_ANSWER.update({QUESTION:ANSWER})
     elif ( TYPE == 4 ):  # 2.4 - Miscellaneous Notes
+        if ( PLATFORM in ('Darwin','Linux')):
+            print("Unix/Linux")
+            click.edit(filename='misc_notes.md')
+        elif ( PLATFORM == 'Windows' ):
+            print("Windows")
         NOTE = input("Note: ")
         MISC_NOTES.append(NOTE)
 
@@ -235,9 +244,6 @@ def main():
         except: # to except errors
             print(EOFError())
             print('\n' + 'Oops! Something went wrong, please try again...' + '\n')
-
-
-
 
 # Main function Calling
 main()
