@@ -2,3 +2,4 @@ python-dotenv
 requests
 click
 colorama
+rich

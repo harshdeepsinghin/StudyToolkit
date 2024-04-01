@@ -5,6 +5,8 @@ import os
 import platform
 import click
 from colorama import Fore, Style
+from rich.console import Console
+from rich.markdown import Markdown
 from dotenv import load_dotenv
 
 # Environments loading
@@ -19,6 +21,7 @@ TOPIC_DESCRIPTION = dict()
 QUESTION_ANSWER = dict()
 MISC_NOTES = list()
 
+console = Console()
 PLATFORM = platform.system()
 
 # FUNCTIONS DEFINITION
@@ -150,8 +153,10 @@ def search_term():
         response = requests.post(url, headers=headers, json=data)
 
         if response.status_code == 200:
-            content = response.json()['candidates'][0]['content']['parts'][0]['text']
-            print(content)
+            markdown_text = response.json()['candidates'][0]['content']['parts'][0]['text']
+
+            markdown = Markdown(markdown_text)
+            console.print(markdown)
         else:
             print("Error:", response.status_code)
 
@@ -190,8 +195,9 @@ def askai():
         response = requests.post(url, headers=headers, json=data)
 
         if response.status_code == 200:
-            content = response.json()['candidates'][0]['content']['parts'][0]['text']
-            print(content)
+            markdown_text = response.json()['candidates'][0]['content']['parts'][0]['text']
+            markdown = Markdown(markdown_text)
+            console.print(markdown)
         else:
             print("Error:", response.status_code)
 
