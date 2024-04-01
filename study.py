@@ -11,11 +11,11 @@ from dotenv import load_dotenv
 
 # Environments loading
 load_dotenv()
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+API_KEY = os.getenv('API_KEY')
 
 # Variables Declaration
 
-TOPICS = set()
+TOPICS = set()  #LATER
 TERM_DEFINITION = dict()
 TOPIC_DESCRIPTION = dict()
 QUESTION_ANSWER = dict()
@@ -25,8 +25,10 @@ console = Console()
 PLATFORM = platform.system()
 
 # FUNCTIONS DEFINITION
-## Menu functoin
+## Menu function
 def menu(submenu):
+    '''Display menus by taking submenu as arguments.'''
+
     if ( submenu == 0 ):
         print("""
     0 - This menu
@@ -36,12 +38,14 @@ def menu(submenu):
     4 - Utilities
     5 - Exit
         """)
+
     elif ( submenu == 1 ):
         print("""
     0 - This menu
     1 - Ask AI
     2 - Study Notes
         """)
+
     elif ( submenu == 12 ):
         print("""
     0 - This menu
@@ -51,6 +55,7 @@ def menu(submenu):
     4 - Miscellaneous Notes
     5 - All Notes
         """)
+
     elif ( submenu == 2 ):
         print("""
     0 - This menu
@@ -59,26 +64,33 @@ def menu(submenu):
     3 - Question-Answer
     4 - Miscellaneous Notes
         """)
+
     return 0
 
 ## Note function
 def note(TYPE):
+    '''Takes notes of different types.'''
+
     if ( TYPE == 1 ):    # 2.1 - Term-Definition
         TERM = input("Term: ")
         DEFINITION = input("Definition: ")
         TERM_DEFINITION.update({TERM:DEFINITION})
+
     elif ( TYPE == 2 ):  # 2.2 - Topic-Description
         TOPIC = input("Topic: ")
         DESCRIPTION = input("Description: ")
         TOPIC_DESCRIPTION.update({TOPIC:DESCRIPTION})
+
     elif ( TYPE == 3 ):  # 2.3 - Question-Answer
         QUESTION = input("Question: ")
         ANSWER = input("Answer: ")
         QUESTION_ANSWER.update({QUESTION:ANSWER})
+
     elif ( TYPE == 4 ):  # 2.4 - Miscellaneous Notes
         if ( PLATFORM in ('Darwin','Linux','Unix')):
             print("Unix/Linux/Darwin")
             click.edit(filename='misc_notes.txt')
+
         elif ( PLATFORM == 'Windows' ):
             print("To be implemented.") #TODO
 
@@ -98,6 +110,8 @@ def print_with_color_and_format(text, color, bold=False, underline=False):
 
 ## Study Notes function
 def study_notes(TYPE):
+    '''Displays the existing notes of different types.'''
+
     if TYPE == 1:    # 2.1 - Term-Definition
         print_with_color_and_format("Term Definitions:", Fore.YELLOW, bold=True)
         for term, definition in TERM_DEFINITION.items():
@@ -121,56 +135,18 @@ def study_notes(TYPE):
     return 0
 
 
-
-def search_term():
-    while True:
-        print()
-        TERM = input("What is?: ")
-        FIELD = input("In the field/domain of: ")
-
-        data = {
-            "contents": [
-                {
-                    "role": "user",
-                    "parts": [
-                        {
-                            "text": f"Give a breif meaning in one line of the term {TERM} in the field or domain of {FIELD}"
-                        }
-                    ]
-                }
-            ]
-        }
-        if ( TERM == "exit" ):
-            print("\nBye... See you...\n")
-            break
-
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={GOOGLE_API_KEY}"
-
-        headers = {
-            "Content-Type": "application/json"
-        }
-
-        response = requests.post(url, headers=headers, json=data)
-
-        if response.status_code == 200:
-            markdown_text = response.json()['candidates'][0]['content']['parts'][0]['text']
-
-            markdown = Markdown(markdown_text)
-            console.print(markdown)
-        else:
-            print("Error:", response.status_code)
-
-    return 0
-
-
 ## Ask AI function
 def askai():
-    PROMPT = "foobar"
+    '''Asks Google\'s Gemini-Pro AI to study more effeciently.
+    *Requires preconfiguration for API_KEY into .env file  '''
+
+    PROMPT = "foobar"   # placeholder text
     while True:
         print()
+        print("Enter \"quit\" or \"exit\" to quit asking AI.")
         PROMPT = input("Ask: ")
         if ( PROMPT in ("quit","exit") ):
-            print("\nBye... See you...\n")
+            print("\nBye... Come back again...\n")
             return 0
 
         data = {
@@ -186,7 +162,7 @@ def askai():
             ]
         }
 
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={GOOGLE_API_KEY}"
+        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={API_KEY}"
 
         headers = {
             "Content-Type": "application/json"
@@ -205,9 +181,12 @@ def askai():
 
 ## Load Data Function
 def load_data():
+    '''Loads data from current working directory to the running program.'''
+
     global TERM_DEFINITION
     global TOPIC_DESCRIPTION
     global QUESTION_ANSWER
+
     try:
         with open("term_definition.json", 'r') as TED:
             TERM_DEFINITION = json.load(TED)
@@ -227,10 +206,10 @@ def load_data():
         pass
     return 0
 
-
-
 ## Save Data Function
 def save_data():
+    '''Saves data to local files in the current working directory from the running program'''
+
     with open("term_definition.json", 'w') as TED, open("topic_description.json", 'w') as TOD, open("question_answer.json", 'w') as QA:
         json.dump(TERM_DEFINITION, TED, indent=4)
         json.dump(TOPIC_DESCRIPTION, TOD, indent=4)
@@ -242,24 +221,23 @@ def main():
     load_data()
     menu(0)
     while True:
-
         try:
             Q = -1
-            Q=int(input("\nSelect an option: "))
+            Q=int(input("\nSelect an option (press 0 for menu): "))
             if ( Q == 0 ) :     # 0 - Menu
                 menu(0)
+
             elif ( Q == 1) :    # 1 - Study
                 menu(1)
                 Q = -1
-                Q=int(input("\nSelect an option: "))
+                Q=int(input("\nSelect an option (press 0 for menu): "))
                 if ( Q == 1 ):      # 1.1 - Ask AI
                     Q = -1
                     askai()
-
                 elif ( Q == 2 ):    # 1.2 - Study Notes
                     Q = -1
                     menu(12)
-                    Q=int(input("\nSelect an option: "))
+                    Q=int(input("\nSelect an option (press 0 for menu): "))
                     if ( Q == 1 ):    # 1.2.1 - Term-Definition
                         Q = -1
                         study_notes(1)
@@ -286,7 +264,7 @@ def main():
             elif ( Q == 2 ):    # 2 - Note
                 Q = -1
                 menu(2)
-                Q=int(input("\nSelect an option: "))
+                Q=int(input("\nSelect an option (press 0 for menu): "))
                 if ( Q == 0 ):
                     Q = -1
                     menu(2)
@@ -318,3 +296,45 @@ def main():
 
 # Main function Calling
 main()
+
+# --- LATER WORK ---
+
+def search_term():  #LATER
+    while True:
+        print()
+        TERM = input("What is?: ")
+        FIELD = input("In the field/domain of: ")
+
+        data = {
+            "contents": [
+                {
+                    "role": "user",
+                    "parts": [
+                        {
+                            "text": f"Give a breif meaning in one line of the term {TERM} in the field or domain of {FIELD}"
+                        }
+                    ]
+                }
+            ]
+        }
+        if ( TERM == "exit" ):
+            print("\nBye... See you...\n")
+            break
+
+        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={API_KEY}"
+
+        headers = {
+            "Content-Type": "application/json"
+        }
+
+        response = requests.post(url, headers=headers, json=data)
+
+        if response.status_code == 200:
+            markdown_text = response.json()['candidates'][0]['content']['parts'][0]['text']
+
+            markdown = Markdown(markdown_text)
+            console.print(markdown)
+        else:
+            print("Error:", response.status_code)
+
+    return 0
