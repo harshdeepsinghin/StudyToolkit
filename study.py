@@ -160,9 +160,13 @@ def search_term():
 
 ## Ask AI function
 def askai():
+    PROMPT = "foobar"
     while True:
         print()
         PROMPT = input("Ask: ")
+        if ( PROMPT in ("quit","exit") ):
+            print("\nBye... See you...\n")
+            return 0
 
         data = {
             "contents": [
@@ -176,9 +180,6 @@ def askai():
                 }
             ]
         }
-        if ( PROMPT == "exit" ):
-            print("\nBye... See you...\n")
-            break
 
         url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={GOOGLE_API_KEY}"
 
@@ -194,7 +195,7 @@ def askai():
         else:
             print("Error:", response.status_code)
 
-        return 0
+    return 0
 
 ## Load Data Function
 def load_data():
