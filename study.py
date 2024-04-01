@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 # Environments loading
 load_dotenv()
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-api_hash = os.getenv('API_HASH')
 
 # Variables Declaration
 

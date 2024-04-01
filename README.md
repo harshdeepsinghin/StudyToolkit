@@ -1,4 +1,6 @@
-## StudyToolkit
+# StudyToolkit
+
+### Introduction
 A python program which is a toolkit for studying effeciently.
 
 ### Installation
