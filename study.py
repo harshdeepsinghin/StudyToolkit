@@ -8,6 +8,7 @@ from colorama import Fore, Style
 from rich.console import Console
 from rich.markdown import Markdown
 from dotenv import load_dotenv
+from notifypy import Notify
 
 # Environments loading
 load_dotenv()
@@ -63,6 +64,12 @@ def menu(submenu):
     2 - Topic-Description
     3 - Question-Answer
     4 - Miscellaneous Notes
+        """)
+
+    elif ( submenu == 4 ):
+        print("""
+    0 - This menu
+    1 - Pomodoro Timer
         """)
 
     return 0
@@ -180,6 +187,28 @@ def askai():
     return 0
 
 ## Load Data Function
+
+## Pomodoro Timer Function
+def pomodoro_timer(WORK=25, BREAK=5, CYCLES=4):
+    notification = Notify()
+    notification.title = "Pomodoro Timer"
+    for i in range(CYCLES):
+        print("\n\n!!!...⏰...WORK TIME...⏰...!!!\n")
+
+        notification.message = "Work Time Started!"
+        notification.audio = "/Users/ektara/gitrepos/StudyToolkit/work_sound.wav"
+        notification.send()
+        time.sleep(10)
+
+        print("\n\n!!!...⌛...BREAK TIME...⌛...!!!\n")
+
+        notification.message = "Break Time!"
+        notification.audio = "/Users/ektara/gitrepos/StudyToolkit/break_sound.wav"
+        notification.send()
+        time.sleep(10)
+
+    return 0
+
 def load_data():
     '''Loads data from current working directory to the running program.'''
 
@@ -284,6 +313,13 @@ def main():
                 elif ( Q == 4 ):    # 2.4 - Miscellaneous Notes
                     Q = -1
                     note(4)
+
+            elif ( Q == 4 ):    # 4 - Utilities
+                Q = -1
+                menu(4)
+                Q=int(input("\nSelect an option (press 0 for menu): "))
+                if ( Q == 1 ):
+                    pomodoro_timer()
 
             elif ( Q == 5 ):    # 5 - Exit
                 Q = -1
