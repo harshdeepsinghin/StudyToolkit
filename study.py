@@ -189,24 +189,32 @@ def askai():
 ## Load Data Function
 
 ## Pomodoro Timer Function
-def pomodoro_timer(WORK=25, BREAK=5, CYCLES=4):
+def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
     notification = Notify()
     notification.title = "Pomodoro Timer"
+    print("\n\n!!!...⏰...POMODORO STARTED...⏰...!!!")
+
     for i in range(CYCLES):
-        print("\n\n!!!...⏰...WORK TIME...⏰...!!!\n")
+        print("\n\n!!!...⏰...WORK TIME...⏰...!!!")
+        print("(Pres `Ctrl + C` to stop)\n")
 
         notification.message = "Work Time Started!"
         notification.audio = "/Users/ektara/gitrepos/StudyToolkit/work_sound.wav"
         notification.send()
-        time.sleep(10)
+        time.sleep(WORK*60)
 
-        print("\n\n!!!...⌛...BREAK TIME...⌛...!!!\n")
+        print("\n\n!!!...⌛...BREAK TIME...⌛...!!!")
+        print("(Pres `Ctrl + C` to stop)\n")
 
         notification.message = "Break Time!"
         notification.audio = "/Users/ektara/gitrepos/StudyToolkit/break_sound.wav"
         notification.send()
-        time.sleep(10)
+        if ( (i+1) in (4,8,12,16,20,24) ):      # For bigger break after 4 rounds
+            time.sleep(BREAK*3*60)
+        else:
+            time.sleep(BREAK*60)
 
+    print("\n\n!!!...⏰...POMODORO ENDED...⏰...!!!")
     return 0
 
 def load_data():
