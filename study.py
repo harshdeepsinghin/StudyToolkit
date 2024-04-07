@@ -192,29 +192,45 @@ def askai():
 def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
     notification = Notify()
     notification.title = "Pomodoro Timer"
-    print("\n\n!!!...⏰...POMODORO STARTED...⏰...!!!")
+    print("\n\n⏰  POMODORO STARTED  ⏰")
 
     for i in range(CYCLES):
-        print("\n\n!!!...⏰...WORK TIME...⏰...!!!")
-        print("(Pres `Ctrl + C` to stop)\n")
-
+        print(f"\nROUND {i+1}...")
         notification.message = "Work Time Started!"
         notification.audio = "/Users/ektara/gitrepos/StudyToolkit/work_sound.wav"
         notification.send()
-        time.sleep(WORK*60)
 
-        print("\n\n!!!...⌛...BREAK TIME...⌛...!!!")
+        print(f"\n⏰  WORK TIME  ⏰  ROUND {i+1}  ⏰")
+        print("(Pres `Ctrl + C` to stop)\n")
+        SECONDS=WORK*60
+        while SECONDS:
+            MIN, SEC = divmod(SECONDS,60)
+            timer = '\t{:02d}:{:02d}'.format(MIN,SEC)
+            print(timer, end='\r')
+            time.sleep(1)
+            SECONDS-=1
+
+
+        print(f"\n\n⌛  BREAK TIME  ⌛  ROUND {i+1}  ⏰")
         print("(Pres `Ctrl + C` to stop)\n")
 
         notification.message = "Break Time!"
         notification.audio = "/Users/ektara/gitrepos/StudyToolkit/break_sound.wav"
         notification.send()
-        if ( (i+1) in (4,8,12,16,20,24) ):      # For bigger break after 4 rounds
-            time.sleep(BREAK*3*60)
-        else:
-            time.sleep(BREAK*60)
 
-    print("\n\n!!!...⏰...POMODORO ENDED...⏰...!!!")
+        if ( (i+1) % 4 == 0 ):      # For bigger break after 4 rounds
+            SECONDS = BREAK*3*60
+        else:
+            SECONDS = BREAK*60
+
+        while SECONDS:
+            MIN, SEC = divmod(SECONDS,60)
+            timer = '\t{:02d}:{:02d}'.format(MIN,SEC)
+            print(timer, end='\r')
+            time.sleep(1)
+            SECONDS-=1
+
+    print("\n!!!...⏰...POMODORO ENDED...⏰...!!!")
     return 0
 
 def load_data():
@@ -326,8 +342,17 @@ def main():
                 Q = -1
                 menu(4)
                 Q=int(input("\nSelect an option (press 0 for menu): "))
+
                 if ( Q == 1 ):
-                    pomodoro_timer()
+                    print("Default timer - Work time: 25m, Break time: 5m, Cycles: 8")
+                    CHOICE = input("Wants to modify the default timer? (y/n): ")
+                    if (CHOICE in ('y','Y')):
+                        WORK = int(input("Enter minutes for work: "))
+                        BREAK = int(input("Enter minutes for break: "))
+                        CYCLES = int(input("Enter number of cycles/rounds: "))
+                        pomodoro_timer(WORK, BREAK, CYCLES)
+                    else:
+                        pomodoro_timer()
 
             elif ( Q == 5 ):    # 5 - Exit
                 Q = -1
