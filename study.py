@@ -211,7 +211,7 @@ def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
             SECONDS-=1
 
 
-        print(f"\n\n⌛  BREAK TIME  ⌛  ROUND {i+1}  ⏰")
+        print(f"\n\n⌛  BREAK TIME  ⌛  ROUND {i+1}  ⌛")
         print("(Pres `Ctrl + C` to stop)\n")
 
         notification.message = "Break Time!"
