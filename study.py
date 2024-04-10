@@ -196,7 +196,7 @@ def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
 
     for i in range(CYCLES):
         print(f"\nROUND {i+1}...")
-        notification.message = "Work Time Started!"
+        notification.message = f"Work Time ({WORK}m) Started!"
         notification.audio = "/Users/ektara/gitrepos/StudyToolkit/work_sound.wav"
         notification.send()
 
@@ -214,7 +214,7 @@ def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
         print(f"\n\n⌛  BREAK TIME  ⌛  ROUND {i+1}  ⌛")
         print("(Pres `Ctrl + C` to stop)\n")
 
-        notification.message = "Break Time!"
+        notification.message = f"Break ({BREAK}m) Time!"
         notification.audio = "/Users/ektara/gitrepos/StudyToolkit/break_sound.wav"
         notification.send()
 
@@ -230,7 +230,7 @@ def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
             time.sleep(1)
             SECONDS-=1
 
-    print("\n!!!...⏰...POMODORO ENDED...⏰...!!!")
+    print("\n⏰  POMODORO ENDED  ⏰")
     return 0
 
 def load_data():
