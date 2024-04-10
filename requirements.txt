@@ -3,4 +3,4 @@ requests
 click
 colorama
 rich
-notifypy
+notify-py
