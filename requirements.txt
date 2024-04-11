@@ -4,3 +4,4 @@ click
 colorama
 rich
 notify-py
+simple-term-menu

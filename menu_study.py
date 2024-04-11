@@ -9,6 +9,8 @@ from rich.console import Console
 from rich.markdown import Markdown
 from dotenv import load_dotenv
 from notifypy import Notify
+from simple_term_menu import TerminalMenu
+
 
 # Environments loading
 load_dotenv()
@@ -31,46 +33,100 @@ def menu(submenu):
     '''Display menus by taking submenu as arguments.'''
 
     if ( submenu == 0 ):
-        print("""
-    0 - This menu
-    1 - Study
-    2 - Note
-    3 - Retain
-    4 - Utilities
-    5 - Exit
-        """)
+        options = ["Main Menu", "Study", "Note", "Retain", "Utilities", "Exit"]
+        terminal_menu = TerminalMenu(options, title="\n\tMain Menu")
+        menu_entry_index = terminal_menu.show()
+        if (menu_entry_index == 0):
+            menu(0)
+        elif (menu_entry_index == 1):
+            menu(1)
+        elif (menu_entry_index == 2):
+            menu(2)
+        elif (menu_entry_index == 3):
+            menu(3)
+        elif (menu_entry_index == 4):
+            menu(4)
+        elif (menu_entry_index == 5):
+            Exit()
 
     elif ( submenu == 1 ):
-        print("""
-    0 - This menu
-    1 - Ask AI
-    2 - Study Notes
-        """)
+        options = ["Previous Menu", "Ask AI", "Study notes", "Exit"]
+        terminal_menu = TerminalMenu(options, title="\n\tMain -> Study Menu")
+        menu_entry_index = terminal_menu.show()
+        if (menu_entry_index == 0):
+            menu(0)
+        elif (menu_entry_index == 1):
+            askai()
+        elif (menu_entry_index == 2):
+            menu(12)
+        elif (menu_entry_index == 3):
+            Exit()
 
     elif ( submenu == 12 ):
-        print("""
-    0 - This menu
-    1 - Term-Definition
-    2 - Topic-Description
-    3 - Question-Answer
-    4 - Miscellaneous Notes
-    5 - All Notes
-        """)
+        options = ["Previous Menu", "Term-Definition", "Topic-Description", "Question-Answer", "Miscellaneous Notes", "All Notes", "Exit"]
+        terminal_menu = TerminalMenu(options, title="\n\tMain -> Study -> Study Notes Menu")
+        menu_entry_index = terminal_menu.show()
+        if (menu_entry_index == 0):
+            menu(1)
+        elif (menu_entry_index == 1):
+            study_notes(1)
+        elif (menu_entry_index == 2):
+            study_notes(2)
+        elif (menu_entry_index == 3):
+            study_notes(3)
+        elif (menu_entry_index == 4):
+            study_notes(4)
+        elif (menu_entry_index == 5):
+            study_notes(1)
+            study_notes(2)
+            study_notes(3)
+            study_notes(4)
+        elif (menu_entry_index == 6):
+            Exit()
 
     elif ( submenu == 2 ):
-        print("""
-    0 - This menu
-    1 - Term-Definition
-    2 - Topic-Description
-    3 - Question-Answer
-    4 - Miscellaneous Notes
-        """)
+        options = ["Previous Menu", "Term-Definition", "Topic-Description", "Question-Answer", "Miscellaneous Notes", "Exit"]
+        terminal_menu = TerminalMenu(options, title="\n\tMain -> Note Menu")
+        menu_entry_index = terminal_menu.show()
+        if (menu_entry_index == 0):
+            menu(0)
+        elif (menu_entry_index == 1):
+            note(1)
+        elif (menu_entry_index == 2):
+            note(2)
+        elif (menu_entry_index == 3):
+            note(3)
+        elif (menu_entry_index == 4):
+            note(4)
+        elif (menu_entry_index == 5):
+            Exit()
 
     elif ( submenu == 4 ):
-        print("""
-    0 - This menu
-    1 - Pomodoro Timer
-        """)
+        options = ["Previous Menu", "Pomodoro Timer", "Exit"]
+        terminal_menu = TerminalMenu(options, title="\n\tMain -> Utilities Menu")
+        menu_entry_index = terminal_menu.show()
+        if (menu_entry_index == 0):
+            menu(0)
+        elif (menu_entry_index == 1):
+            options = ["Previous Menu", "Customized", "25m Work - 5m Break - 8 Cycles (POPULAR)", "50m Work - 10m Break - 4 Cycles", "Exit"]
+            terminal_menu = TerminalMenu(options, cursor_index=2, title="\n\tMain -> Utilities -> Pomodoro Timer Menu")
+            menu_entry_index = terminal_menu.show()
+            if (menu_entry_index == 0):
+                menu(4)
+            elif (menu_entry_index == 1):
+                WORK = int(input("Enter minutes for work: "))
+                BREAK = int(input("Enter minutes for break: "))
+                CYCLES = int(input("Enter number of cycles/rounds: "))
+                pomodoro_timer(WORK, BREAK, CYCLES)
+            elif (menu_entry_index == 2):
+                pomodoro_timer(25,5,8)
+            elif (menu_entry_index == 3):
+                pomodoro_timer(50,10,4)
+            elif (menu_entry_index == 4):
+                Exit()
+
+        elif (menu_entry_index == 2):
+            Exit()
 
     return 0
 
@@ -101,7 +157,9 @@ def note(TYPE):
         elif ( PLATFORM == 'Windows' ):
             print("To be implemented.") #TODO
 
+    print("\nNoted!\n")
     save_data()
+    menu(1)
     return 0
 
 
@@ -139,6 +197,7 @@ def study_notes(TYPE):
         with open("misc_notes.txt", 'r') as MN:
             for line in MN:
                 print_with_color_and_format(f"\t• {line.strip()}", Fore.MAGENTA)
+    menu(12)
     return 0
 
 
@@ -154,7 +213,7 @@ def askai():
         PROMPT = input("Ask: ")
         if ( PROMPT in ("quit","exit") ):
             print("\nBye... Come back again...\n")
-            return 0
+            break
 
         data = {
             "contents": [
@@ -184,6 +243,7 @@ def askai():
         else:
             print("Error:", response.status_code)
 
+    menu(1)
     return 0
 
 ## Load Data Function
@@ -231,6 +291,8 @@ def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
             SECONDS-=1
 
     print("\n⏰  POMODORO ENDED  ⏰")
+
+    menu(4)
     return 0
 
 def load_data():
@@ -269,99 +331,17 @@ def save_data():
         json.dump(QUESTION_ANSWER, QA, indent=4)
     return 0
 
+## Quit/Exit function
+def Exit():
+    save_data()
+    print("Bye! Come back soon...")
+    exit()
+
 ## Main function
 def main():
     load_data()
-    menu(0)
     while True:
-        try:
-            Q = -1
-            Q=int(input("\nSelect an option (press 0 for menu): "))
-            if ( Q == 0 ) :     # 0 - Menu
-                menu(0)
-
-            elif ( Q == 1) :    # 1 - Study
-                menu(1)
-                Q = -1
-                Q=int(input("\nSelect an option (press 0 for menu): "))
-                if ( Q == 1 ):      # 1.1 - Ask AI
-                    Q = -1
-                    askai()
-                elif ( Q == 2 ):    # 1.2 - Study Notes
-                    Q = -1
-                    menu(12)
-                    Q=int(input("\nSelect an option (press 0 for menu): "))
-                    if ( Q == 1 ):    # 1.2.1 - Term-Definition
-                        Q = -1
-                        study_notes(1)
-
-                    elif ( Q == 2 ):  # 1.2.2 - Topic-Description
-                        Q = -1
-                        study_notes(2)
-
-                    elif ( Q == 3 ):  # 1.2.3 - Question-Answer
-                        Q = -1
-                        study_notes(3)
-
-                    elif ( Q == 4 ):  # 1.2.4 - Miscellaneous Notes
-                        Q = -1
-                        study_notes(4)
-
-                    elif ( Q == 5 ):  # 1.2.5 - All Notes
-                        Q = -1
-                        study_notes(1)
-                        study_notes(2)
-                        study_notes(3)
-                        study_notes(4)
-
-            elif ( Q == 2 ):    # 2 - Note
-                Q = -1
-                menu(2)
-                Q=int(input("\nSelect an option (press 0 for menu): "))
-                if ( Q == 0 ):
-                    Q = -1
-                    menu(2)
-
-                elif ( Q == 1 ):    # 2.1 - Term-Definition
-                    Q = -1
-                    note(1)
-
-                elif ( Q == 2 ):    # 2.2 - Topic-Description
-                    Q = -1
-                    note(2)
-
-                elif ( Q == 3 ):    # 2.3 - Question-Answer
-                    Q = -1
-                    note(3)
-
-                elif ( Q == 4 ):    # 2.4 - Miscellaneous Notes
-                    Q = -1
-                    note(4)
-
-            elif ( Q == 4 ):    # 4 - Utilities
-                Q = -1
-                menu(4)
-                Q=int(input("\nSelect an option (press 0 for menu): "))
-
-                if ( Q == 1 ):
-                    print("Default timer - Work time: 25m, Break time: 5m, Cycles: 8")
-                    CHOICE = input("Wants to modify the default timer? (y/n): ")
-                    if (CHOICE in ('y','Y')):
-                        WORK = int(input("Enter minutes for work: "))
-                        BREAK = int(input("Enter minutes for break: "))
-                        CYCLES = int(input("Enter number of cycles/rounds: "))
-                        pomodoro_timer(WORK, BREAK, CYCLES)
-                    else:
-                        pomodoro_timer()
-
-            elif ( Q == 5 ):    # 5 - Exit
-                Q = -1
-                save_data()
-                return 0
-
-        except: # to except errors
-            print(EOFError())
-            print('\n' + 'Oops! Something went wrong, please try again...' + '\n')
+        menu(0)
 
 # Main function Calling
 main()
