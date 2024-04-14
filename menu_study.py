@@ -274,14 +274,16 @@ def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
         print(f"\n\n⌛  BREAK TIME  ⌛  ROUND {i+1}  ⌛")
         print("(Pres `Ctrl + C` to stop)\n")
 
-        notification.message = f"Break ({BREAK}m) Time!"
         notification.audio = "/Users/ektara/gitrepos/StudyToolkit/break_sound.wav"
-        notification.send()
 
         if ( (i+1) % 4 == 0 ):      # For bigger break after 4 rounds
             SECONDS = BREAK*3*60
+            notification.message = f"Break ({BREAK*3}m) Time!"
+            notification.send()
         else:
             SECONDS = BREAK*60
+            notification.message = f"Break ({BREAK}m) Time!"
+            notification.send()
 
         while SECONDS:
             MIN, SEC = divmod(SECONDS,60)
