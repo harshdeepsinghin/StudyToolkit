@@ -34,7 +34,7 @@ def menu(submenu):
 
     if ( submenu == 0 ):
         options = ["Main Menu", "Study", "Note", "Retain", "Utilities", "Exit"]
-        terminal_menu = TerminalMenu(options, title="\n\tMain Menu")
+        terminal_menu = TerminalMenu(options, title="Main Menu")
         menu_entry_index = terminal_menu.show()
         if (menu_entry_index == 0):
             menu(0)
@@ -51,7 +51,7 @@ def menu(submenu):
 
     elif ( submenu == 1 ):
         options = ["Previous Menu", "Ask AI", "Study notes", "Exit"]
-        terminal_menu = TerminalMenu(options, title="\n\tMain -> Study Menu")
+        terminal_menu = TerminalMenu(options, title="Main -> Study Menu")
         menu_entry_index = terminal_menu.show()
         if (menu_entry_index == 0):
             menu(0)
@@ -64,7 +64,7 @@ def menu(submenu):
 
     elif ( submenu == 12 ):
         options = ["Previous Menu", "Term-Definition", "Topic-Description", "Question-Answer", "Miscellaneous Notes", "All Notes", "Exit"]
-        terminal_menu = TerminalMenu(options, title="\n\tMain -> Study -> Study Notes Menu")
+        terminal_menu = TerminalMenu(options, title="Main -> Study -> Study Notes Menu")
         menu_entry_index = terminal_menu.show()
         if (menu_entry_index == 0):
             menu(1)
@@ -86,7 +86,7 @@ def menu(submenu):
 
     elif ( submenu == 2 ):
         options = ["Previous Menu", "Term-Definition", "Topic-Description", "Question-Answer", "Miscellaneous Notes", "Exit"]
-        terminal_menu = TerminalMenu(options, title="\n\tMain -> Note Menu")
+        terminal_menu = TerminalMenu(options, title="Main -> Note Menu")
         menu_entry_index = terminal_menu.show()
         if (menu_entry_index == 0):
             menu(0)
@@ -103,13 +103,13 @@ def menu(submenu):
 
     elif ( submenu == 4 ):
         options = ["Previous Menu", "Pomodoro Timer", "Exit"]
-        terminal_menu = TerminalMenu(options, title="\n\tMain -> Utilities Menu")
+        terminal_menu = TerminalMenu(options, title="Main -> Utilities Menu")
         menu_entry_index = terminal_menu.show()
         if (menu_entry_index == 0):
             menu(0)
         elif (menu_entry_index == 1):
             options = ["Previous Menu", "Customized", "25m Work - 5m Break - 8 Cycles (POPULAR)", "50m Work - 10m Break - 4 Cycles", "Exit"]
-            terminal_menu = TerminalMenu(options, cursor_index=2, title="\n\tMain -> Utilities -> Pomodoro Timer Menu")
+            terminal_menu = TerminalMenu(options, cursor_index=2, title="Main -> Utilities -> Pomodoro Timer Menu")
             menu_entry_index = terminal_menu.show()
             if (menu_entry_index == 0):
                 menu(4)
