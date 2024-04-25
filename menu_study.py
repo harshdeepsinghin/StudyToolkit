@@ -77,10 +77,7 @@ def menu(submenu):
         elif (menu_entry_index == 4):
             study_notes(4)
         elif (menu_entry_index == 5):
-            study_notes(1)
-            study_notes(2)
-            study_notes(3)
-            study_notes(4)
+            study_notes(5)
         elif (menu_entry_index == 6):
             Exit()
 
@@ -193,6 +190,26 @@ def study_notes(TYPE):
             print_with_color_and_format(f"\t{question}", Fore.CYAN, bold=True)
             print_with_color_and_format(f"\t►  {answer}\n", Fore.CYAN)
     elif TYPE == 4:  # 2.4 - Miscellaneous Notes
+        print_with_color_and_format("Miscellaneous Notes:", Fore.MAGENTA, bold=True)
+        with open("misc_notes.txt", 'r') as MN:
+            for line in MN:
+                print_with_color_and_format(f"\t• {line.strip()}", Fore.MAGENTA)
+    elif TYPE == 5:  # 2.5 - All Notes
+        print_with_color_and_format("Term Definitions:", Fore.YELLOW, bold=True)
+        for term, definition in TERM_DEFINITION.items():
+            print_with_color_and_format(f"\t{term}", Fore.YELLOW, bold=True)
+            print_with_color_and_format(f"\t►  {definition}\n", Fore.YELLOW)
+
+        print_with_color_and_format("Topic Descriptions:", Fore.GREEN, bold=True)
+        for topic, description in TOPIC_DESCRIPTION.items():
+            print_with_color_and_format(f"\t{topic}", Fore.GREEN, bold=True)
+            print_with_color_and_format(f"\t►  {description}\n", Fore.GREEN)
+
+        print_with_color_and_format("Question-Answers:", Fore.CYAN, bold=True)
+        for question, answer in QUESTION_ANSWER.items():
+            print_with_color_and_format(f"\t{question}", Fore.CYAN, bold=True)
+            print_with_color_and_format(f"\t►  {answer}\n", Fore.CYAN)
+
         print_with_color_and_format("Miscellaneous Notes:", Fore.MAGENTA, bold=True)
         with open("misc_notes.txt", 'r') as MN:
             for line in MN:
