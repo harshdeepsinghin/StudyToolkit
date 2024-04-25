@@ -100,7 +100,7 @@ def menu(submenu):
             Exit()
 
     elif ( submenu == 3 ):
-        options = ["Previous Menu", "Term-Definition", "Topic-Description", "Question-Answer", "Miscellaneous Notes", "All Notes", "Exit"]
+        options = ["Previous Menu", "Term-Definition", "Topic-Description", "Question-Answer", "Exit"]
         terminal_menu = TerminalMenu(options, title="Main -> Retain")
         menu_entry_index = terminal_menu.show()
         if (menu_entry_index == 0):
@@ -112,10 +112,6 @@ def menu(submenu):
         elif (menu_entry_index == 3):
             retain_notes(3)
         elif (menu_entry_index == 4):
-            retain_notes(4)
-        elif (menu_entry_index == 5):
-            retain_notes(5)
-        elif (menu_entry_index == 6):
             Exit()
 
     elif ( submenu == 4 ):
