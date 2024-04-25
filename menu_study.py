@@ -10,6 +10,7 @@ from rich.markdown import Markdown
 from dotenv import load_dotenv
 from notifypy import Notify
 from simple_term_menu import TerminalMenu
+import random
 
 
 # Environments loading
@@ -95,6 +96,25 @@ def menu(submenu):
             note(3)
         elif (menu_entry_index == 4):
             note(4)
+        elif (menu_entry_index == 5):
+            Exit()
+
+    elif ( submenu == 3 ):
+        options = ["Previous Menu", "Term-Definition", "Topic-Description", "Question-Answer", "Miscellaneous Notes", "All Notes", "Exit"]
+        terminal_menu = TerminalMenu(options, title="Main -> Retain")
+        menu_entry_index = terminal_menu.show()
+        if (menu_entry_index == 0):
+            menu(0)
+        elif (menu_entry_index == 1):
+            retain_notes(1)
+        elif (menu_entry_index == 2):
+            retain_notes(2)
+        elif (menu_entry_index == 3):
+            retain_notes(3)
+        elif (menu_entry_index == 4):
+            retain_notes(4)
+        elif (menu_entry_index == 5):
+            retain_notes(5)
         elif (menu_entry_index == 5):
             Exit()
 
@@ -263,7 +283,81 @@ def askai():
     menu(1)
     return 0
 
-## Load Data Function
+
+def retain_notes(TYPE):
+    '''Retain notes of different types.'''
+    while True:
+        if TYPE == 1:    # 2.1 - Term-Definition
+            # Randomly select a term from TERM_DEFINITION
+            terms, definitions = TERM_DEFINITION.items()
+            ask_term, right_definition = random.choice(list(TERM_DEFINITION.items()))
+            print_with_color_and_format(f"Match the definition for the term '{ask_term}':", Fore.YELLOW, bold=True)
+            # Generate multiple-choice options with the correct answer included
+            options = [definitions]
+            print(definitions)
+            random.shuffle(options)
+            print(options)
+
+            # Display MCQ options using TerminalMenu
+            terminal_menu = TerminalMenu(options, title="Options:")
+            menu_entry_index = terminal_menu.show()
+
+            # Check if the selected option matches the correct answer
+            if options[menu_entry_index] == right_definition:
+                print("Hooray! You got it right.")
+                break
+            else:
+                print("Sorry, that's incorrect. Please try again.")
+
+        elif TYPE == 2:  # 2.2 - Topic-Description
+            # Randomly select a topic from TOPIC_DESCRIPTION
+            topic, description = random.choice(list(TOPIC_DESCRIPTION.items()))
+            print_with_color_and_format(f"Match the description for the topic '{topic}':", Fore.GREEN, bold=True)
+            # Generate multiple-choice options with the correct answer included
+            options = [description]
+            while len(options) < 4:
+                random_description = random.choice(list(TOPIC_DESCRIPTION.values()))
+                if random_description not in options:
+                    options.append(random_description)
+            random.shuffle(options)
+
+            # Display MCQ options using TerminalMenu
+            terminal_menu = TerminalMenu(options, title="Options:")
+            menu_entry_index = terminal_menu.show()
+
+            # Check if the selected option matches the correct answer
+            if options[menu_entry_index] == description:
+                print("Hooray! You got it right.")
+                break
+            else:
+                print("Sorry, that's incorrect. Please try again.")
+
+        elif TYPE == 3:  # 2.3 - Question-Answer
+            # Randomly select a question from QUESTION_ANSWER
+            question, answer = random.choice(list(QUESTION_ANSWER.items()))
+            print_with_color_and_format(f"Match the answer for the question '{question}':", Fore.CYAN, bold=True)
+            # Generate multiple-choice options with the correct answer included
+            options = [answer]
+            while len(options) < 4:
+                random_answer = random.choice(list(QUESTION_ANSWER.values()))
+                if random_answer not in options:
+                    options.append(random_answer)
+            random.shuffle(options)
+
+            # Display MCQ options using TerminalMenu
+            terminal_menu = TerminalMenu(options, title="Options:")
+            menu_entry_index = terminal_menu.show()
+
+            # Check if the selected option matches the correct answer
+            if options[menu_entry_index] == answer:
+                print("Hooray! You got it right.")
+                break
+            else:
+                print("Sorry, that's incorrect. Please try again.")
+
+    menu(3)  # Go back to the retain menu
+
+
 
 ## Pomodoro Timer Function
 def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
@@ -314,6 +408,7 @@ def pomodoro_timer(WORK=25, BREAK=5, CYCLES=8):
     menu(4)
     return 0
 
+## Load Data Function
 def load_data():
     '''Loads data from current working directory to the running program.'''
 
