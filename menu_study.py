@@ -115,7 +115,7 @@ def menu(submenu):
             retain_notes(4)
         elif (menu_entry_index == 5):
             retain_notes(5)
-        elif (menu_entry_index == 5):
+        elif (menu_entry_index == 6):
             Exit()
 
     elif ( submenu == 4 ):
@@ -289,14 +289,12 @@ def retain_notes(TYPE):
     while True:
         if TYPE == 1:    # 2.1 - Term-Definition
             # Randomly select a term from TERM_DEFINITION
-            terms, definitions = TERM_DEFINITION.items()
+            definitions = list(TERM_DEFINITION.values())
             ask_term, right_definition = random.choice(list(TERM_DEFINITION.items()))
             print_with_color_and_format(f"Match the definition for the term '{ask_term}':", Fore.YELLOW, bold=True)
             # Generate multiple-choice options with the correct answer included
-            options = [definitions]
-            print(definitions)
+            options = definitions
             random.shuffle(options)
-            print(options)
 
             # Display MCQ options using TerminalMenu
             terminal_menu = TerminalMenu(options, title="Options:")
@@ -311,14 +309,11 @@ def retain_notes(TYPE):
 
         elif TYPE == 2:  # 2.2 - Topic-Description
             # Randomly select a topic from TOPIC_DESCRIPTION
-            topic, description = random.choice(list(TOPIC_DESCRIPTION.items()))
-            print_with_color_and_format(f"Match the description for the topic '{topic}':", Fore.GREEN, bold=True)
+            descriptions = list(TOPIC_DESCRIPTION.values())
+            ask_topic, right_description = random.choice(list(TOPIC_DESCRIPTION.items()))
+            print_with_color_and_format(f"Match the description for the topic '{ask_topic}':", Fore.GREEN, bold=True)
             # Generate multiple-choice options with the correct answer included
-            options = [description]
-            while len(options) < 4:
-                random_description = random.choice(list(TOPIC_DESCRIPTION.values()))
-                if random_description not in options:
-                    options.append(random_description)
+            options = descriptions
             random.shuffle(options)
 
             # Display MCQ options using TerminalMenu
@@ -326,7 +321,7 @@ def retain_notes(TYPE):
             menu_entry_index = terminal_menu.show()
 
             # Check if the selected option matches the correct answer
-            if options[menu_entry_index] == description:
+            if options[menu_entry_index] == right_description:
                 print("Hooray! You got it right.")
                 break
             else:
@@ -334,14 +329,11 @@ def retain_notes(TYPE):
 
         elif TYPE == 3:  # 2.3 - Question-Answer
             # Randomly select a question from QUESTION_ANSWER
-            question, answer = random.choice(list(QUESTION_ANSWER.items()))
-            print_with_color_and_format(f"Match the answer for the question '{question}':", Fore.CYAN, bold=True)
+            answers = list(QUESTION_ANSWER.values())
+            ask_question, right_answer = random.choice(list(QUESTION_ANSWER.items()))
+            print_with_color_and_format(f"Match the answer for the question '{ask_question}':", Fore.CYAN, bold=True)
             # Generate multiple-choice options with the correct answer included
-            options = [answer]
-            while len(options) < 4:
-                random_answer = random.choice(list(QUESTION_ANSWER.values()))
-                if random_answer not in options:
-                    options.append(random_answer)
+            options = answers
             random.shuffle(options)
 
             # Display MCQ options using TerminalMenu
@@ -349,7 +341,7 @@ def retain_notes(TYPE):
             menu_entry_index = terminal_menu.show()
 
             # Check if the selected option matches the correct answer
-            if options[menu_entry_index] == answer:
+            if options[menu_entry_index] == right_answer:
                 print("Hooray! You got it right.")
                 break
             else:
