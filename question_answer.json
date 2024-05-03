@@ -1,0 +1,6 @@
+{
+    "What is Linux": "It is a kernel created by Linus Torvalds.",
+    "What is Linux OS?": "It is a free and open-source Unix-like operating system.",
+    "What is Tuple in Python?": "It is an immutable data structure to store data. It can have different data types. It is similar to Lists, but cannot be modified as it is immutable.",
+    "Why we cannot add or remove elements from a tuple in Python?": "These are immutable, meaning once they are created, their contents cannot be changed. This immutability ensures data integrity and makes it suitable for situations where you need to ensure that the data remains constant."
+}

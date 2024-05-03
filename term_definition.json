@@ -1,0 +1,9 @@
+{
+    "Algorithm": "It is a set of instructions or rules that are followed to solve a problem or perform a specific task.",
+    "Data Structure": "It is a way of organizing and storing data so that it can be accessed and modified efficiently.",
+    "Programming Language": "It is a formal language comprising a set of instructions that produce various kinds of output.",
+    "Binary Search": "It is an algorithm used to find the position of a specific value within a sorted array.",
+    "Array": "It is a data structure that stores a collection of elements, each identified by at least one array index or key.",
+    "Linked List": "It is a linear collection of elements, where each element points to the next one, forming a chain-like structure.",
+    "Recursion": "It is a programming technique in which a function calls itself in order to solve smaller instances of the same problem."
+}
