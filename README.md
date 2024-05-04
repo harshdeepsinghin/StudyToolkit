@@ -30,3 +30,13 @@ pip3 install -r requirements.txt
     ```
     API_KEY = "AI**************************************"
     ```
+
+### Usage
+
+```bash
+python3 StudyToolkit.py
+```
+
+It is a menu-driven program, so it will be easy to use.
+
+Thank You!

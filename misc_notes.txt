@@ -1,0 +1,3 @@
+Linux operating system is a free and open-source Unix-like operating system.
+The Linux kernel, on the other hand, is the core part of the Linux operating system responsible for managing hardware resources and providing essential services that serves as the foundation for various operating systems.
+An operating system acts as an interface between the software and different parts of the computer or the computer hardware through kernel.
